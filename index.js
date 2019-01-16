@@ -1,23 +1,24 @@
+var map
 initMap = ()=>{
     let mapDiv = document.getElementById("map")
-    var map
+    
     map = new google.maps.Map(mapDiv, {
         center: {lat: -34.397, lng: 150.644},
-        zoom: 8,
-        //
+        zoom: 13,
+        //desabilita interface padrão do mapa
         disableDefaultUI: true
     });
 
-    //Cria o botão controle
+    //Cria a div do botão controle
     var fabDiv = document.createElement('div');
+    //Cria o botão controle
     var fab = new fabBtn(fabDiv, map);
 
     // Define posição
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(fabDiv);
 
-    //
+    //função responsavel por criar o botão
     function fabBtn(fabDiv, map) {
-        //
         let fabUI = document.createElement('div')
         fabDiv.appendChild(fabUI)
         var btn = document.createElement('button')
@@ -38,64 +39,42 @@ initMap = ()=>{
     
     }
 }
-var rotas = [
-    'Calabouco x Santa Cecília',
-    'Ceasa x Santo Antônio',
-    'Centro x Bonsucesso',
-    'Centro x Cidade Luz',
-    'Centro x Codin',
-    'Centro x Eldorado',
-    'Centro x Escola Agrotécnica',
-    'Centro x Fundão',
-    'Centro x P. Aurora', 
-    'Centro x Jockey', 
-    'Centro x Nova Brasília',
-    'Centro x Novo Jockey',
-    'Centro x Penha',
-    'Centro x P. Guarus',
-    'Centro x P. Imperial',
-    'Centro x Santa Rosa',
-    'Jockey x Santa Rosa',
-    'Lagoa das Pedras',
-    'Nova Campos',
-    'Nova Campos via N.Mundo-Custódia',
-    'Nova Campos via Nogueira',
-    'P. Aurora x Beira Valão',
-    'P. Prazeres x Alphaville',
-    'P. Prazeres x IPS via J. Maria',
-    'Penha x Pecuária',
-    'Nova Brasília x Bela Vista',
-    'Nova Campos via Novo Mundo',
-    'Rodoviária x Capão',
-    'Rodoviária x Corrego Fundo',
-    'Rodoviária x Farol via Gaivota',
-    'Rodoviária x Farol via xexé',
-    'Rodoviária x Guandú',
-    'Rodoviária x Morro do Côco',
-    'Rodoviária x Palmares',
-    'Rodoviária x Quixaba',
-    'Rodoviária x Ribeiro do Amaro',
-    'Rodoviária x Santa Cruz',
-    'Rodoviária x Santa Rosa',
-    'Rodoviária x São Diogo',
-    'Rodoviária x São Sebastião',
-    'Rodoviária x Shopping Estrada',
-    'Rodoviária x Travessão',
-    'Rodoviária x Vila Nova',
-    'Santo Eduardo',
-]
-
+//Função executada assim que o documento estiver carregado
 $(document).ready(()=>{
+    //Recebe e atribui o array
+    var rotas = getRotas()
+    //For para percorrer rotas e adicionar ao select
     rotas.forEach(function(e, i){
-        $("#sel-rotas").append("<option value='"+e+"'>"+e+"</option>")
+        $("#sel-rotas").append("<option value='"+i+"'>"+e.nome+"</option>")
     })
-    
+
+    //Variável que irá conter  a rota atual
+    var rotaAtual = null
+
+    //Função que troca a rota quando o valor for alterado
     $("#sel-rotas").on("change", function(){
-        if($(this).val() == "0"){
+        if($(this).val() == "padrao"){
             alert("Vc deve escolher")
         }
+        //Se o valor selecionado for diferente do padrão
         else{
-            alert($(this).val())
+            console.log($(this).val())
+            //Se já existir uma rota selecionada, será removida
+            if(rotaAtual){
+                rotaAtual.setMap(null)
+            }
+            //Define e exibe a nova rota
+            rotaAtual = new google.maps.Polyline({
+                path: rotas[$(this).val()].coords,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            })
+            //Centraliza o mapa na primeira coordenada da rota
+            map.setCenter(rotas[$(this).val()].coords[0]); 
+            rotaAtual.setMap(map);
+            $('#modalrotas').modal('hide') 
         }
     })
 
