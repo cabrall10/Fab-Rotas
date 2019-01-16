@@ -1,0 +1,9 @@
+https://developers.google.com/maps/documentation/javascript/examples/control-positioning
+
+https://developers.google.com/maps/documentation/javascript/controls#ControlPositioning
+
+https://developers.google.com/maps/documentation/javascript/controls
+
+https://developers.google.com/maps/documentation/javascript/examples/control-custom
+
+https://developers.google.com/maps/documentation/javascript/examples/map-simple
