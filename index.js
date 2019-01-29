@@ -6,29 +6,27 @@ initMap = ()=>{
         center: {lat: -34.397, lng: 150.644},
         zoom: 13,
         //desabilita interface padrão do mapa
-        disableDefaultUI: true
-    });
+        disableDefaultUI: true,
+        styles: getStyles()
+    })
 
     //Cria a div do botão controle
-    var fabDiv = document.createElement('div');
+    var fabDiv = document.createElement('div')
     //Cria o botão controle
-    var fab = new fabBtn(fabDiv, map);
-
+    var fab = new fabBtn(fabDiv, map)
     // Define posição
-    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(fabDiv);
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(fabDiv)
 
     //função responsavel por criar o botão
     function fabBtn(fabDiv, map) {
         let fabUI = document.createElement('div')
         fabDiv.appendChild(fabUI)
         var btn = document.createElement('button')
-        $(btn).addClass("btn btn-info bmd-btn-fab")
+        $(btn).addClass("cBtn btn btn-info bmd-btn-fab")
         $(btn).attr('type', 'button')
         $(fabDiv).css("margin", "0% 5% 2% 0%")
         var icon = document.createElement('i')
-        $(icon).addClass("material-icons")
-        // document.getElementById("a").classList.add("classe")
-        $(icon).html('grade')
+        $(icon).addClass("fabIcon fas fa-route")
         btn.appendChild(icon)
         fabUI.appendChild(btn)
         
@@ -44,7 +42,7 @@ $(document).ready(()=>{
     //Recebe e atribui o array
     var rotas = getRotas()
     //For para percorrer rotas e adicionar ao select
-    rotas.forEach(function(e, i){
+    rotas.forEach((e, i)=>{
         $("#sel-rotas").append("<option value='"+i+"'>"+e.nome+"</option>")
     })
 
@@ -53,12 +51,8 @@ $(document).ready(()=>{
 
     //Função que troca a rota quando o valor for alterado
     $("#sel-rotas").on("change", function(){
-        if($(this).val() == "padrao"){
-            alert("Vc deve escolher")
-        }
         //Se o valor selecionado for diferente do padrão
-        else{
-            console.log($(this).val())
+        if($(this).val() != "padrao"){
             //Se já existir uma rota selecionada, será removida
             if(rotaAtual){
                 rotaAtual.setMap(null)
@@ -67,16 +61,15 @@ $(document).ready(()=>{
             rotaAtual = new google.maps.Polyline({
                 path: rotas[$(this).val()].coords,
                 geodesic: true,
-                strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
+                strokeColor: '#186c97',
+                strokeOpacity: 0.75,
                 strokeWeight: 2
             })
             //Centraliza o mapa na primeira coordenada da rota
-            map.setCenter(rotas[$(this).val()].coords[0]); 
-            rotaAtual.setMap(map);
+            map.setCenter(rotas[$(this).val()].coords[0])
+            rotaAtual.setMap(map)
             $('#modalrotas').modal('hide') 
         }
     })
 
 })
-

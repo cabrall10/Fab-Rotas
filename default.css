@@ -1,14 +1,15 @@
 #map {
     height: 100%;
-  }
-  /* Optional: Makes the sample page fill the window. */
-  html, body {
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-  }
+}
 
-  .fab{
+.fab{
     margin-top: 10px;
     background-color: #fff;
     border: 2px solid #fff;
@@ -18,6 +19,7 @@
     margin-bottom: 22px;
     text-align: center;
 }
+
 .fabText{
     color: #666666;
     font-family: Roboto,Arial,sans-serif;
@@ -27,7 +29,28 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+
 .fabIcon{
-    margin-right: 10px;
+    margin: 2%;
+    font-size: 110%;
     /* margin-left: 1%; */
+}
+
+.custom-select{
+    border-radius: 5px !important;
+}
+
+.custom-select:focus{
+    border-width: 1.5px !important;
+    outline: transparent !important;
+    border-color:#416C94 !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.075), 0 0 5px #416C94 !important
+}
+
+.modal-content{
+    border-radius: 5px !important;
+}
+
+.cBtn{
+    background: #416C94 !important;
 }
